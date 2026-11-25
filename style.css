@@ -122,6 +122,44 @@ nav a:hover {
     color: #ffffff;
 }
 
+.menu-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    width: 21px;
+    height: 2px;
+    background: #fff;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.menu-toggle[aria-expanded="true"] span:first-child {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] span:last-child {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+.menu-toggle:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
+
 /* Sections */
 
 section {
@@ -494,18 +532,48 @@ footer {
 
     header {
         padding: 15px 5%;
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
+        flex-direction: row;
+        gap: 0;
+        text-align: left;
     }
 
     header h1 {
         font-size: 22px;
     }
 
+    .menu-toggle {
+        display: flex;
+    }
+
+    nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px 5% 12px;
+        background: rgba(10, 10, 15, 0.96);
+        border-bottom: 1px solid #222;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(14px);
+    }
+
+    nav.is-open {
+        display: flex;
+    }
+
     nav a {
-        font-size: 15px;
-        margin-left: 12px;
+        font-size: 16px;
+        margin: 0;
+        padding: 12px 4px;
+        text-align: center;
+    }
+
+    nav a + a {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     /* Hero stacks vertically */
@@ -595,11 +663,6 @@ footer {
 @media (max-width: 480px) {
     header h1 {
         font-size: 18px;
-    }
-
-    nav a {
-        font-size: 13px;
-        margin-left: 8px;
     }
 
     .hero-text {

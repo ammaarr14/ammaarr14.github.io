@@ -13,7 +13,12 @@
 
 <header>
     <h1>A.square<sup>2</sup></h1>
-    <nav>
+    <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+    </button>
+    <nav id="primary-navigation">
         <a href="#about-details">About</a>
         <a href="#skills">Skills</a>
         <a href="#projects">Projects</a>
@@ -144,6 +149,38 @@
     <p>© 2026 Ammaar Abdullah. All rights reserved.</p>
     <p class="footer-quote">" Carpe Diem "</p>
 </footer>
+
+<script>
+    const menuToggle = document.querySelector(".menu-toggle");
+    const primaryNavigation = document.querySelector("#primary-navigation");
+
+    const setNavigationOpen = (isOpen) => {
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+        menuToggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+        primaryNavigation.classList.toggle("is-open", isOpen);
+    };
+
+    menuToggle.addEventListener("click", () => {
+        setNavigationOpen(menuToggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    primaryNavigation.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => setNavigationOpen(false));
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && menuToggle.getAttribute("aria-expanded") === "true") {
+            setNavigationOpen(false);
+            menuToggle.focus();
+        }
+    });
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) {
+            setNavigationOpen(false);
+        }
+    });
+</script>
 
 </body>
 </html>
