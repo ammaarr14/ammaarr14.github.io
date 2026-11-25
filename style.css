@@ -13,10 +13,73 @@ html {
 }
 
 body {
+    position: relative;
+    isolation: isolate;
     background-color: #0a0a0f;
     background-image: 
         radial-gradient(ellipse at top left, rgba(0, 200, 180, 0.18) 0%, transparent 30%),
         radial-gradient(ellipse at bottom right, rgba(0, 200, 180, 0.18) 0%, transparent 30%);
+}
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.1;
+    filter: saturate(0.8);
+    mask-image: radial-gradient(ellipse, #000 42%, transparent 78%);
+}
+
+body::before {
+    top: 12vh;
+    right: 2vw;
+    width: min(46vw, 580px);
+    aspect-ratio: 622 / 334;
+    background-image: url("devops.png");
+    animation: devops-float 30s ease-in-out infinite alternate;
+}
+
+body::after {
+    bottom: 9vh;
+    left: 2vw;
+    width: min(40vw, 480px);
+    aspect-ratio: 576 / 219;
+    background-image: url("ubuntu.png");
+    animation: ubuntu-float 34s ease-in-out infinite alternate;
+}
+
+.linux-background {
+    position: fixed;
+    z-index: -1;
+    top: 42vh;
+    left: 32vw;
+    width: min(34vw, 420px);
+    aspect-ratio: 4 / 3;
+    pointer-events: none;
+    background: url("linux.jpg") center / contain no-repeat;
+    opacity: 0.18;
+    mix-blend-mode: screen;
+    mask-image: radial-gradient(ellipse at center, #000 35%, transparent 80%);
+    animation: linux-float 36s ease-in-out infinite alternate;
+}
+
+@keyframes devops-float {
+    from { transform: translate3d(0, -10px, 0) rotate(-1deg); }
+    to { transform: translate3d(-12px, 12px, 0) rotate(1deg); }
+}
+
+@keyframes ubuntu-float {
+    from { transform: translate3d(0, 10px, 0) rotate(1deg); }
+    to { transform: translate3d(12px, -10px, 0) rotate(-1deg); }
+}
+
+@keyframes linux-float {
+    from { transform: translate3d(-8px, 8px, 0) rotate(-1deg); }
+    to { transform: translate3d(8px, -8px, 0) rotate(1deg); }
 }
 
 /* Header */
@@ -408,6 +471,27 @@ footer {
 
 /* Mobile (max 768px) */
 @media (max-width: 768px) {
+    body::before {
+        top: 22vh;
+        right: -8vw;
+        width: 60vw;
+        opacity: 0.07;
+    }
+
+    body::after {
+        bottom: 7vh;
+        left: -8vw;
+        width: 56vw;
+        opacity: 0.07;
+    }
+
+    .linux-background {
+        top: 43vh;
+        left: 32vw;
+        width: clamp(140px, 36vw, 280px);
+        opacity: 0.12;
+    }
+
     header {
         padding: 15px 5%;
         flex-direction: column;
@@ -496,6 +580,14 @@ footer {
 
     p {
         font-size: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::before,
+    body::after,
+    .linux-background {
+        animation: none;
     }
 }
 
